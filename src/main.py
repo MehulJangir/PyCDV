@@ -203,3 +203,6 @@ parameters = {
 }
 df = pd.read_json(json.dumps(OpenBlender.call(action, parameters)['sample']), convert_dates=False, convert_axes=False).sort_values('timestamp', ascending=False)
 df.reset_index(drop=True, inplace=True)
+
+
+df.head()
