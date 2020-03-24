@@ -140,3 +140,17 @@ plt = df_compress.plot(x='timestamp', y =['PLATINUM_PRICE_price', 'CRUDE_OIL_PRI
 #################################################
 
 
+# First the News Dataset
+action = 'API_createDataset'
+parameters = { 
+ 'token':'YOUR_TOKEN_HERE',
+ 'name':'Coronavirus News',
+ 'description':'YOUR_DATASET_DESCRIPTION',
+ 'visibility':'private',
+ 'tags':[],
+ 'insert_observations':'on',
+    'select_as_timestamp' : 'timestamp',
+ 'dataframe':df_news.to_json() 
+}
+        
+OpenBlender.call(action, parameters)
