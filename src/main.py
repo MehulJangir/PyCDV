@@ -153,8 +153,9 @@ parameters = {
  'dataframe':df_news.to_json() 
 }
         
-OpenBlender.call(action, parameters)
+print(OpenBlender.call(action, parameters))
 
+news_token0 = input("please enter the value you see in the 'id_dataset' field from the output above: ")
 
 # And now the Financial Indicators
 action = 'API_createDataset'
@@ -169,4 +170,7 @@ parameters = {
  'dataframe':df_compress.to_json() 
 }
         
-OpenBlender.call(action, parameters)
+print("\n\n", OpenBlender.call(action, parameters))
+
+finance_token = input("Again, for the output above, enter the value you see in the 'id_dataset' field")
+
