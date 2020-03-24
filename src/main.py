@@ -89,3 +89,33 @@ plt.show()
 #################################################
 
 
+action = 'API_getObservationsFromDataset'
+        
+parameters = {
+ 'token':'YOUR_TOKEN_HERE',
+ 'id_dataset':'5d4c14cd9516290b01c7d673',
+ 'aggregate_in_time_interval':{"output":"avg","empty_intervals":"impute","time_interval_size":86400},
+ 'blends':[
+        #Yen vs USD              
+{"id_blend":"5d2495169516290b5fd2cee3","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Euro Vs USD
+{"id_blend":"5d4b3af1951629707cc1116b","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Pound Vs USD              
+{"id_blend":"5d4b3be1951629707cc11341","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Corn Price    
+{"id_blend":"5d4c23b39516290b01c7feea","restriction":"None","blend_type":"ts","drop_features":[]},
+        # CocaCola Price     
+{"id_blend":"5d4c72399516290b02fe7359","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Platinum price             
+{"id_blend":"5d4ca1049516290b02fee837","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Tin Price
+{"id_blend":"5d4caa429516290b01c9dff0","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Crude Oil Price
+{"id_blend":"5d4c80bf9516290b01c8f6f9","restriction":"None","blend_type":"ts","drop_features":[]}],
+'date_filter':{"start_date":"2020-01-01T06:00:00.000Z","end_date":"2020-03-10T06:00:00.000Z"},
+'consumption_confirmation':'on' 
+}
+df = pd.read_json(json.dumps(OpenBlender.call(action, parameters)['sample']), convert_dates=False, convert_axes=False).sort_values('timestamp', ascending=False)
+df.reset_index(drop=True, inplace=True)
+print(df.shape)
+df.head()
