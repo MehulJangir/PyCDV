@@ -58,3 +58,7 @@ parameters = {
 }
 df_news = pd.read_json(json.dumps(OpenBlender.call(action, parameters)['sample']), convert_dates=False, convert_axes=False).sort_values('timestamp', ascending=False)
 df_news.reset_index(drop=True, inplace=True)
+
+
+# Let's take a look
+df_news.head(20)
