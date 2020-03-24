@@ -119,3 +119,16 @@ df = pd.read_json(json.dumps(OpenBlender.call(action, parameters)['sample']), co
 df.reset_index(drop=True, inplace=True)
 print(df.shape)
 df.head()
+
+
+# Lets compress all into the (0, 1) domain
+df_compress = df.dropna(0).select_dtypes(include=['int16', 'int32', 'int64', 'float16', 'float32', 'float64']).apply(lambda x: (x - x.min()) / (x.max() - x.min()))
+df_compress['timestamp'] = df['timestamp']
+# Now we select the columns that interest us
+cols_of_interest = ['timestamp', 'PLATINUM_PRICE_price', 'CRUDE_OIL_PRICE_price', 'COCACOLA_PRICE_price', 'open', 'CORN_PRICE_price', 'TIN_PRICE_price', 'PLATINUM_PRICE_price']
+df_compress = df_compress[cols_of_interest]
+df_compress.rename(columns={'open':'DOW_JONES_price'}, inplace=True)
+# An now let's plot them
+from matplotlib import pyplot as plt
+fig, ax = plt.subplots(figsize=(17,7))
+plt = df_compress.plot(x='timestamp', y =['PLATINUM_PRICE_price', 'CRUDE_OIL_PRICE_price', 'COCACOLA_PRICE_price', 'DOW_JONES_price', 'CORN_PRICE_price', 'TIN_PRICE_price', 'PLATINUM_PRICE_price'], ax=ax)
