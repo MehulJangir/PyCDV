@@ -82,3 +82,10 @@ plt.figure()
 plt.imshow(WordCloud(max_font_size=50, max_words=80, background_color="white").generate(' '.join([val for val in df['source'][0: 20]])), interpolation="bilinear")
 plt.axis("off")
 plt.show()
+
+
+#################################################
+#                   Step 4 Code below           #
+#################################################
+
+
