@@ -32,7 +32,7 @@ df_confirmed.head(10)
 
 action = 'API_getOpenTextData'
 parameters = {
-    'token':'YOUR_TOKEN_HERE',
+    'token':token0,
     'consumption_confirmation':'on',
     'date_filter':{"start_date":"2020-01-01T06:00:00.000Z", 
                    "end_date":"2020-03-10T06:00:00.000Z"},
@@ -82,3 +82,53 @@ plt.figure()
 plt.imshow(WordCloud(max_font_size=50, max_words=80, background_color="white").generate(' '.join([val for val in df['source'][0: 20]])), interpolation="bilinear")
 plt.axis("off")
 plt.show()
+
+
+#################################################
+#                   Step 4 Code below           #
+#################################################
+
+
+action = 'API_getObservationsFromDataset'
+        
+parameters = {
+ 'token':token0,
+ 'id_dataset':'5d4c14cd9516290b01c7d673',
+ 'aggregate_in_time_interval':{"output":"avg","empty_intervals":"impute","time_interval_size":86400},
+ 'blends':[
+        #Yen vs USD              
+{"id_blend":"5d2495169516290b5fd2cee3","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Euro Vs USD
+{"id_blend":"5d4b3af1951629707cc1116b","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Pound Vs USD              
+{"id_blend":"5d4b3be1951629707cc11341","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Corn Price    
+{"id_blend":"5d4c23b39516290b01c7feea","restriction":"None","blend_type":"ts","drop_features":[]},
+        # CocaCola Price     
+{"id_blend":"5d4c72399516290b02fe7359","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Platinum price             
+{"id_blend":"5d4ca1049516290b02fee837","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Tin Price
+{"id_blend":"5d4caa429516290b01c9dff0","restriction":"None","blend_type":"ts","drop_features":[]},
+        # Crude Oil Price
+{"id_blend":"5d4c80bf9516290b01c8f6f9","restriction":"None","blend_type":"ts","drop_features":[]}],
+'date_filter':{"start_date":"2020-01-01T06:00:00.000Z","end_date":"2020-03-10T06:00:00.000Z"},
+'consumption_confirmation':'on' 
+}
+df = pd.read_json(json.dumps(OpenBlender.call(action, parameters)['sample']), convert_dates=False, convert_axes=False).sort_values('timestamp', ascending=False)
+df.reset_index(drop=True, inplace=True)
+print(df.shape)
+df.head()
+
+
+# Lets compress all into the (0, 1) domain
+df_compress = df.dropna(0).select_dtypes(include=['int16', 'int32', 'int64', 'float16', 'float32', 'float64']).apply(lambda x: (x - x.min()) / (x.max() - x.min()))
+df_compress['timestamp'] = df['timestamp']
+# Now we select the columns that interest us
+cols_of_interest = ['timestamp', 'PLATINUM_PRICE_price', 'CRUDE_OIL_PRICE_price', 'COCACOLA_PRICE_price', 'open', 'CORN_PRICE_price', 'TIN_PRICE_price', 'PLATINUM_PRICE_price']
+df_compress = df_compress[cols_of_interest]
+df_compress.rename(columns={'open':'DOW_JONES_price'}, inplace=True)
+# An now let's plot them
+from matplotlib import pyplot as plt
+fig, ax = plt.subplots(figsize=(17,7))
+plt = df_compress.plot(x='timestamp', y =['PLATINUM_PRICE_price', 'CRUDE_OIL_PRICE_price', 'COCACOLA_PRICE_price', 'DOW_JONES_price', 'CORN_PRICE_price', 'TIN_PRICE_price', 'PLATINUM_PRICE_price'], ax=ax)
