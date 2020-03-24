@@ -143,7 +143,7 @@ plt = df_compress.plot(x='timestamp', y =['PLATINUM_PRICE_price', 'CRUDE_OIL_PRI
 # First the News Dataset
 action = 'API_createDataset'
 parameters = { 
- 'token':'YOUR_TOKEN_HERE',
+ 'token':token0,
  'name':'Coronavirus News',
  'description':'YOUR_DATASET_DESCRIPTION',
  'visibility':'private',
@@ -159,7 +159,7 @@ OpenBlender.call(action, parameters)
 # And now the Financial Indicators
 action = 'API_createDataset'
 parameters = { 
- 'token':'YOUR_TOKEN_HERE',
+ 'token':token0,
  'name':'Financial Indicators for COVID',
  'description':'YOUR_DATASET_DESCRIPTION',
  'visibility':'private',
