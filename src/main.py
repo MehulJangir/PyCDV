@@ -174,3 +174,10 @@ print("\n\n", OpenBlender.call(action, parameters))
 
 finance_token = input("Again, for the output above, enter the value you see in the 'id_dataset' field")
 
+#regarding the print statements and input statements above, see the below explanation (also included in a commit message, but written here for convinience)
+"""
+"added input statements to (hopefully) grab the required tokens from the output of the 1st and 2nd code snippets of step 5 for the project article. TO-DO: This base-line code may be better suited for a jupyter notebook, please make one and add it to the repo"
+"""
+
+# NOTE: if the inputs don't work in the way i expect them to, then definitely make the Jupyter Notebook so that the user is aware they will need to initialise these variables manually in the next segment of code
+# TO-DO: make a jupyter notebook of the article and the code within it (for convinience, it is this article: "https://towardsdatascience.com/gather-all-the-coronavirus-data-with-python-19aa22167dea") 
