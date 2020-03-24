@@ -132,3 +132,11 @@ df_compress.rename(columns={'open':'DOW_JONES_price'}, inplace=True)
 from matplotlib import pyplot as plt
 fig, ax = plt.subplots(figsize=(17,7))
 plt = df_compress.plot(x='timestamp', y =['PLATINUM_PRICE_price', 'CRUDE_OIL_PRICE_price', 'COCACOLA_PRICE_price', 'DOW_JONES_price', 'CORN_PRICE_price', 'TIN_PRICE_price', 'PLATINUM_PRICE_price'], ax=ax)
+
+
+
+#################################################
+#                   Step 4 Code below           #
+#################################################
+
+
