@@ -154,3 +154,19 @@ parameters = {
 }
         
 OpenBlender.call(action, parameters)
+
+
+# And now the Financial Indicators
+action = 'API_createDataset'
+parameters = { 
+ 'token':'YOUR_TOKEN_HERE',
+ 'name':'Financial Indicators for COVID',
+ 'description':'YOUR_DATASET_DESCRIPTION',
+ 'visibility':'private',
+ 'tags':[],
+ 'insert_observations':'on',
+ 'select_as_timestamp' : 'timestamp',
+ 'dataframe':df_compress.to_json() 
+}
+        
+OpenBlender.call(action, parameters)
