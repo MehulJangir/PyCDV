@@ -62,3 +62,9 @@ df_news.reset_index(drop=True, inplace=True)
 
 # Let's take a look
 df_news.head(20)
+
+
+interest_countries = ['China', 'Iran', 'Korea', 'Italy', 'France', 'Germany', 'Spain']
+for country in interest_countries:
+    df_news['count_news_' + country] = [len([text for text in daily_lst if country.lower() in text]) for daily_lst in df_news['source_lst']]
+df_news.reindex(index=df_news.index[::-1]).plot(x = 'timestamp', y = [col for col in df_news.columns if 'count' in col], figsize=(17,7), kind='area')
