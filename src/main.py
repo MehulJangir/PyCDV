@@ -172,7 +172,7 @@ parameters = {
         
 print("\n\n", OpenBlender.call(action, parameters))
 
-finance_token = input("Again, for the output above, enter the value you see in the 'id_dataset' field")
+finance_token0 = input("Again, for the output above, enter the value you see in the 'id_dataset' field")
 
 #regarding the print statements and input statements above, see the below explanation (also included in a commit message, but written here for convinience)
 """
@@ -181,3 +181,25 @@ finance_token = input("Again, for the output above, enter the value you see in t
 
 # NOTE: if the inputs don't work in the way i expect them to, then definitely make the Jupyter Notebook so that the user is aware they will need to initialise these variables manually in the next segment of code
 # TO-DO: make a jupyter notebook of the article and the code within it (for convinience, it is this article: "https://towardsdatascience.com/gather-all-the-coronavirus-data-with-python-19aa22167dea") 
+
+
+
+action = 'API_getObservationsFromDataset'
+# ANCHOR: 'COVID19 Confirmed Cases'
+# BLENDS: 'Coronavirus News', 'Financial Indicators for COVID'
+        
+parameters = { 
+ 'token':token0,
+ 'id_dataset':'5e6ac97595162921fda18076',
+ 'date_filter':{
+               "start_date":"2020-01-01T06:00:00.000Z",
+               "end_date":"2020-03-11T06:00:00.000Z"} ,
+ 
+ },
+'filter_select' : {'feature' : 'countryregion', 'categories' : ['Italy']},
+'aggregate_in_time_interval':{"output":"avg","empty_intervals":"impute","time_interval_size":86400},
+ 'blends':[{"id_blend":news_token0,"restriction":"None","blend_type":"ts","drop_features":[]},
+            {"id_blend":finance_token0,"restriction":"None","blend_type":"ts","drop_features":[]}] 
+}
+df = pd.read_json(json.dumps(OpenBlender.call(action, parameters)['sample']), convert_dates=False, convert_axes=False).sort_values('timestamp', ascending=False)
+df.reset_index(drop=True, inplace=True)
