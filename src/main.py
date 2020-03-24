@@ -32,7 +32,7 @@ df_confirmed.head(10)
 
 action = 'API_getOpenTextData'
 parameters = {
-    'token':'YOUR_TOKEN_HERE',
+    'token':token0,
     'consumption_confirmation':'on',
     'date_filter':{"start_date":"2020-01-01T06:00:00.000Z", 
                    "end_date":"2020-03-10T06:00:00.000Z"},
@@ -92,7 +92,7 @@ plt.show()
 action = 'API_getObservationsFromDataset'
         
 parameters = {
- 'token':'YOUR_TOKEN_HERE',
+ 'token':token0,
  'id_dataset':'5d4c14cd9516290b01c7d673',
  'aggregate_in_time_interval':{"output":"avg","empty_intervals":"impute","time_interval_size":86400},
  'blends':[
